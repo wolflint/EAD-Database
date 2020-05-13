@@ -11,7 +11,7 @@
 -- Entity Model :Entity Relationship Diagram
 
 -- Use this script to drop the tables created by -
---   'C:\Users\wolfl\Desktop\ERD-Database-WIP.sql'
+--   'C:\Users\Marcin\Desktop\the-only-erd-we-need-for-ead.sql'
 
 -- Dropping a table has the effect of removing it from the Database.  All existing data is lost
 -- as well as the definition of the table itself (stored as meta-data).  Dropping the tables allows
@@ -21,8 +21,6 @@
 --------------------------------------------------------------
 
 -- Drop tables --
-
-DROP TABLE Employee_Role CASCADE CONSTRAINTS;
 
 DROP TABLE Employee CASCADE CONSTRAINTS;
 
@@ -36,7 +34,21 @@ DROP TABLE Manager CASCADE CONSTRAINTS;
 
 DROP TABLE Role CASCADE CONSTRAINTS;
 
-DROP TABLE Employee_Project CASCADE CONSTRAINTS;
+DROP TABLE ProjectTeamMember CASCADE CONSTRAINTS;
+
+DROP TABLE EmployeeRoles CASCADE CONSTRAINTS;
+
+DROP TABLE SubordinateEmployee CASCADE CONSTRAINTS;
+
+DROP TABLE ManagerRole CASCADE CONSTRAINTS;
+
+DROP TABLE ProjectContact CASCADE CONSTRAINTS;
+
+DROP TABLE ProjectHours CASCADE CONSTRAINTS;
+
+DROP TABLE ProjectTask CASCADE CONSTRAINTS;
+
+DROP TABLE TaskAssignedTo CASCADE CONSTRAINTS;
 
 
 --------------------------------------------------------------
