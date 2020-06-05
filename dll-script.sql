@@ -228,7 +228,8 @@ CREATE TABLE ProjectHours(
 ALTER TABLE ProjectHours
 ADD (
 	CONSTRAINT fk_ProjHours_to_ProjTask FOREIGN KEY(fk_TaskID) REFERENCES ProjectTask(TaskID),
-	CONSTRAINT fk_ProjHours_to_ProjMemb FOREIGN KEY(fk_ProjectID,fk_EmployeeID) REFERENCES ProjectTeamMember(fk_ProjectID,fk_EmployeeID)
+	CONSTRAINT fk_ProjHours_to_Proj FOREIGN KEY(fk_ProjectID) REFERENCES Project(ProjectID),
+	CONSTRAINT fk_ProjHours_to_Emp FOREIGN KEY(fk_EmployeeID) REFERENCES Employee(EmployeeID)
 );
 
 
@@ -248,6 +249,7 @@ CREATE TABLE TaskAssignedTo(
 -- Alter table to add new constraints required to implement the "TaskAssignedTo_ProjectTeamMember" relationship
 ALTER TABLE TaskAssignedTo
 ADD (
-	CONSTRAINT fk_TaskAssign_to_ProjMemb FOREIGN KEY(fk_ProjectID,fk_EmployeeID) REFERENCES ProjectTeamMember(fk_ProjectID,fk_EmployeeID),
+	CONSTRAINT fk_TaskAssign_to_Proj FOREIGN KEY(fk_ProjectID) REFERENCES Project(ProjectID),
+	CONSTRAINT fk_TaskAssign_to_Emp FOREIGN KEY(fk_EmployeeID) REFERENCES Employee(EmployeeID),
 	CONSTRAINT fk_TaskAssign_to_ProjTask FOREIGN KEY(fk_TaskID) REFERENCES ProjectTask(TaskID)
 );
