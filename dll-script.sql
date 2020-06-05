@@ -130,10 +130,10 @@ CREATE TABLE SubordinateEmployee(
 CREATE TABLE ManagerRole(
 	StartDate	DATE NOT NULL,
 	EndDate	DATE,
-	fk1_RoleID	INTEGER NOT NULL,
-	fk2_ManagerID	INTEGER NOT NULL,
+	fk_RoleID	INTEGER NOT NULL,
+	fk_ManagerID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "ManagerRole".
-	CONSTRAINT	pk_ManagerRole PRIMARY KEY (fk1_RoleID,fk2_ManagerID)
+	CONSTRAINT	pk_ManagerRole PRIMARY KEY (fk_RoleID,fk_ManagerID)
 );
 
 -- Create a Database table to represent the "ProjectContact" entity.
@@ -223,13 +223,8 @@ ADD (
 -- Alter table to add new constraints required to implement the "ManagerRole_Role" relationship
 ALTER TABLE ManagerRole
 ADD (
-	CONSTRAINT fk1_ManagerRole_to_Role FOREIGN KEY(fk1_RoleID) REFERENCES Role(RoleID)
-);
-
--- Alter table to add new constraints required to implement the "ManagerRole_Manager" relationship
-ALTER TABLE ManagerRole
-ADD (
-	CONSTRAINT fk2_ManagerRole_to_Manager FOREIGN KEY(fk2_ManagerID) REFERENCES Manager(ManagerID)
+	CONSTRAINT fk_ManRole_to_Role FOREIGN KEY(fk_RoleID) REFERENCES Role(RoleID),
+	CONSTRAINT fk_ManRole_to_Manager FOREIGN KEY(fk_ManagerID) REFERENCES Manager(ManagerID)
 );
 
 -- Alter table to add new constraints required to implement the "ProjectContact_Contact" relationship
