@@ -58,9 +58,9 @@ CREATE TABLE Contact(
 	LastName	VARCHAR2(30) NOT NULL,
 	Phone	VARCHAR2(12),
 	Email	VARCHAR2(40),
-	fk1_ClientID	INTEGER NOT NULL,
+	fk_ClientID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "Contact".
-	CONSTRAINT	pk_Contact PRIMARY KEY (ContactID,fk1_ClientID)
+	CONSTRAINT	pk_Contact PRIMARY KEY (ContactID)
 );
 
 -- Create a Database table to represent the "Manager" entity.
@@ -184,7 +184,7 @@ CREATE TABLE TaskAssignedTo(
 -- Alter table to add new constraints required to implement the "Contact_Client" relationship
 ALTER TABLE Contact
 ADD (
-	CONSTRAINT fk1_Contact_to_Client FOREIGN KEY(fk1_ClientID) REFERENCES Client(ClientID)
+	CONSTRAINT fk_Contact_to_Client FOREIGN KEY(fk_ClientID) REFERENCES Client(ClientID)
 );
 
 -- Alter table to add new constraints required to implement the "Project_Client" relationship
@@ -240,7 +240,7 @@ ADD (
 ALTER TABLE ProjectTask
 ADD (
 	CONSTRAINT fk_ProjTask_to_Proj FOREIGN KEY (fk_ProjectID) REFERENCES Project(ProjectID)
-)
+);
 
 -- Alter table to add new constraints required to implement the "TaskAssignedTo_ProjectTeamMember" relationship
 ALTER TABLE TaskAssignedTo
