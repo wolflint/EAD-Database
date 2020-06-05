@@ -95,26 +95,25 @@ CREATE TABLE Role(
 	CONSTRAINT	pk_Role PRIMARY KEY (RoleID)
 );
 
--- Create a Database table to represent the "ProjectTeamMember" entity.
-CREATE TABLE ProjectTeamMember(
-	EndDate	DATE,
-	StartDate	DATE NOT NULL,
-	fk1_ProjectID	INTEGER NOT NULL,
-	fk1_fk1_ClientID	INTEGER NOT NULL,
-	fk2_fk1_EmployeeID	INTEGER NOT NULL,
-	fk2_fk2_RoleID	INTEGER NOT NULL,
-	-- Specify the PRIMARY KEY constraint for table "ProjectTeamMember".
-	CONSTRAINT	pk_ProjectTeamMember PRIMARY KEY (fk1_ProjectID,fk1_fk1_ClientID,fk2_fk1_EmployeeID,fk2_fk2_RoleID)
-);
-
 -- Create a Database table to represent the "EmployeeRoles" entity.
 CREATE TABLE EmployeeRoles(
 	StartDate	DATE NOT NULL,
 	EndDate	DATE,
-	fk1_EmployeeID	INTEGER NOT NULL,
-	fk2_RoleID	INTEGER NOT NULL,
+	fk_EmployeeID	INTEGER NOT NULL,
+	fk_RoleID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "EmployeeRoles".
-	CONSTRAINT	pk_EmployeeRoles PRIMARY KEY (fk1_EmployeeID,fk2_RoleID)
+	CONSTRAINT	pk_EmployeeRoles PRIMARY KEY (fk_EmployeeID,fk_RoleID)
+);
+
+-- Create a Database table to represent the "ProjectTeamMember" entity.
+CREATE TABLE ProjectTeamMember(
+	EndDate	DATE,
+	StartDate	DATE NOT NULL,
+	fk_ProjectID	INTEGER NOT NULL,
+	fk_EmployeeID	INTEGER NOT NULL,
+	fk_RoleID	INTEGER NOT NULL,
+	-- Specify the PRIMARY KEY constraint for table "ProjectTeamMember".
+	CONSTRAINT	pk_ProjectTeamMember PRIMARY KEY (fk_ProjectID, fk_EmployeeID, fk_RoleID)
 );
 
 -- Create a Database table to represent the "SubordinateEmployee" entity.
@@ -202,7 +201,8 @@ ADD (
 -- Alter table to add new constraints required to implement the "ProjectTeamMember_Project" relationship
 ALTER TABLE ProjectTeamMember
 ADD (
-	CONSTRAINT fk1_ProjectTeamMember_to_Pr1 FOREIGN KEY(fk1_ProjectID,fk1_fk1_ClientID) REFERENCES Project(ProjectID,fk1_ClientID)
+	CONSTRAINT fk_ProjTeamMem_to_Proj FOREIGN KEY(fk_ProjectID) REFERENCES Project(ProjectID),
+	CONSTRAINT fk_ProjTeamMem_to_EmpRole FOREIGN KEY(fk_EmployeeID, fk_RoleID) REFERENCES EmployeeRoles(fk_EmployeeID, fk_RoleID)
 );
 
 -- Alter table to add new constraints required to implement the "EmployeeRoles_Employee" relationship
@@ -251,12 +251,6 @@ ADD (
 ALTER TABLE ProjectContact
 ADD (
 	CONSTRAINT fk2_ProjectContact_to_Proje6 FOREIGN KEY(fk2_ProjectID,fk2_fk1_ClientID) REFERENCES Project(ProjectID,fk1_ClientID)
-);
-
--- Alter table to add new constraints required to implement the "ProjectTeamMember_EmployeeRoles" relationship
-ALTER TABLE ProjectTeamMember
-ADD (
-	CONSTRAINT fk2_ProjectTeamMember_to_Em7 FOREIGN KEY(fk2_fk1_EmployeeID,fk2_fk2_RoleID) REFERENCES EmployeeRoles(fk1_EmployeeID,fk2_RoleID)
 );
 
 -- Alter table to add new constraints required to implement the "Project_Manager" relationship
