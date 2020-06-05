@@ -198,23 +198,18 @@ ADD (
 	CONSTRAINT fk1_Project_to_Client FOREIGN KEY(fk1_ClientID) REFERENCES Client(ClientID)
 );
 
+-- Alter table to add new constraints required to implement the "EmployeeRoles_Employee" relationship
+ALTER TABLE EmployeeRoles
+ADD (
+	CONSTRAINT fk_EmpRoles_to_Emp FOREIGN KEY(fk_EmployeeID) REFERENCES Employee(EmployeeID),
+	CONSTRAINT fk_EmpRoles_to_Role FOREIGN KEY(fk_RoleID) REFERENCES Role(RoleID)
+);
+
 -- Alter table to add new constraints required to implement the "ProjectTeamMember_Project" relationship
 ALTER TABLE ProjectTeamMember
 ADD (
 	CONSTRAINT fk_ProjTeamMem_to_Proj FOREIGN KEY(fk_ProjectID) REFERENCES Project(ProjectID),
 	CONSTRAINT fk_ProjTeamMem_to_EmpRole FOREIGN KEY(fk_EmployeeID, fk_RoleID) REFERENCES EmployeeRoles(fk_EmployeeID, fk_RoleID)
-);
-
--- Alter table to add new constraints required to implement the "EmployeeRoles_Employee" relationship
-ALTER TABLE EmployeeRoles
-ADD (
-	CONSTRAINT fk1_EmployeeRoles_to_Employ2 FOREIGN KEY(fk1_EmployeeID) REFERENCES Employee(EmployeeID)
-);
-
--- Alter table to add new constraints required to implement the "EmployeeRoles_Role" relationship
-ALTER TABLE EmployeeRoles
-ADD (
-	CONSTRAINT fk2_EmployeeRoles_to_Role FOREIGN KEY(fk2_RoleID) REFERENCES Role(RoleID)
 );
 
 -- Alter table to add new constraints required to implement the "SubordinateEmployee_Manager" relationship
