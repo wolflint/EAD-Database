@@ -150,13 +150,11 @@ CREATE TABLE ProjectContact(
 CREATE TABLE ProjectHours(
 	StartedWorking	TIMESTAMP NOT NULL,
 	FinishedWorking	TIMESTAMP NOT NULL,
-	fk1_TaskID	INTEGER NOT NULL,
-	fk2_fk1_ProjectID	INTEGER NOT NULL,
-	fk2_fk1_fk1_ClientID	INTEGER NOT NULL,
-	fk2_fk2_fk1_EmployeeID	INTEGER NOT NULL,
-	fk2_fk2_fk2_RoleID	INTEGER NOT NULL,
+	fk_TaskID	INTEGER NOT NULL,
+	fk_ProjectID	INTEGER NOT NULL,
+	fk_EmployeeID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "ProjectHours".
-	CONSTRAINT	pk_ProjectHours PRIMARY KEY (fk1_TaskID,fk2_fk1_ProjectID,fk2_fk1_fk1_ClientID,fk2_fk2_fk1_EmployeeID,fk2_fk2_fk2_RoleID)
+	CONSTRAINT	pk_ProjectHours PRIMARY KEY (fk_TaskID, fk_ProjectID, fk_EmployeeID)
 );
 
 -- Create a Database table to represent the "ProjectTask" entity.
@@ -235,7 +233,8 @@ ADD (
 -- Alter table to add new constraints required to implement the "ProjectHours_ProjectTask" relationship
 ALTER TABLE ProjectHours
 ADD (
-	CONSTRAINT fk1_ProjectHours_to_Project8 FOREIGN KEY(fk1_TaskID) REFERENCES ProjectTask(TaskID)
+	CONSTRAINT fk_ProjHours_to_ProjTask FOREIGN KEY(fk_TaskID) REFERENCES ProjectTask(TaskID),
+	CONSTRAINT fk_ProjHours_to_ProjMemb FOREIGN KEY(fk_ProjectID,fk_EmployeeID) REFERENCES ProjectTeamMember(fk_ProjectID,fk_EmployeeID)
 );
 
 -- Alter table to add new constraints required to implement the "TaskAssignedTo_ProjectTeamMember" relationship
@@ -248,10 +247,4 @@ ADD (
 ALTER TABLE TaskAssignedTo
 ADD (
 	CONSTRAINT fk2_TaskAssignedTo_to_Proje10 FOREIGN KEY(fk2_TaskID) REFERENCES ProjectTask(TaskID)
-);
-
--- Alter table to add new constraints required to implement the "ProjectHours_ProjectTeamMember" relationship
-ALTER TABLE ProjectHours
-ADD (
-	CONSTRAINT fk2_ProjectHours_to_Project11 FOREIGN KEY(fk2_fk1_ProjectID,fk2_fk1_fk1_ClientID,fk2_fk2_fk1_EmployeeID,fk2_fk2_fk2_RoleID) REFERENCES ProjectTeamMember(fk1_ProjectID,fk1_fk1_ClientID,fk2_fk1_EmployeeID,fk2_fk2_RoleID)
 );
