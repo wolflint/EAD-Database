@@ -29,10 +29,10 @@ CREATE TABLE Project(
 	StartDate	DATE NOT NULL,
 	EstimatedEndDate	DATE NOT NULL,
 	AgreedPrice	DECIMAL(8,2) NOT NULL,
-	fk1_ClientID	INTEGER NOT NULL,
-	fk2_ManagerID	INTEGER NOT NULL,
+	fk_ClientID	INTEGER NOT NULL,
+	fk_ManagerID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "Project".
-	CONSTRAINT	pk_Project PRIMARY KEY (ProjectID,fk1_ClientID)
+	CONSTRAINT	pk_Project PRIMARY KEY (ProjectID)
 );
 
 -- Create a Database table to represent the "Client" entity.
@@ -195,7 +195,8 @@ ADD (
 -- Alter table to add new constraints required to implement the "Project_Client" relationship
 ALTER TABLE Project
 ADD (
-	CONSTRAINT fk1_Project_to_Client FOREIGN KEY(fk1_ClientID) REFERENCES Client(ClientID)
+	CONSTRAINT fk_Proj_to_Client FOREIGN KEY(fk1_ClientID) REFERENCES Client(ClientID),
+	CONSTRAINT fk_Proj_to_Manager FOREIGN KEY(fk2_ManagerID) REFERENCES Manager(ManagerID)
 );
 
 -- Alter table to add new constraints required to implement the "EmployeeRoles_Employee" relationship
@@ -248,11 +249,6 @@ ADD (
 	CONSTRAINT fk2_ProjectContact_to_Proje6 FOREIGN KEY(fk2_ProjectID,fk2_fk1_ClientID) REFERENCES Project(ProjectID,fk1_ClientID)
 );
 
--- Alter table to add new constraints required to implement the "Project_Manager" relationship
-ALTER TABLE Project
-ADD (
-	CONSTRAINT fk2_Project_to_Manager FOREIGN KEY(fk2_ManagerID) REFERENCES Manager(ManagerID)
-);
 
 -- Alter table to add new constraints required to implement the "ProjectHours_ProjectTask" relationship
 ALTER TABLE ProjectHours
