@@ -161,6 +161,7 @@ CREATE TABLE ProjectHours(
 CREATE TABLE ProjectTask(
 	TaskID	INTEGER NOT NULL,
 	Description	CLOB,
+	fk_ProjectID INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "ProjectTask".
 	CONSTRAINT	pk_ProjectTask PRIMARY KEY (TaskID)
 );
@@ -236,6 +237,12 @@ ADD (
 	CONSTRAINT fk_ProjHours_to_ProjTask FOREIGN KEY(fk_TaskID) REFERENCES ProjectTask(TaskID),
 	CONSTRAINT fk_ProjHours_to_ProjMemb FOREIGN KEY(fk_ProjectID,fk_EmployeeID) REFERENCES ProjectTeamMember(fk_ProjectID,fk_EmployeeID)
 );
+
+-- Add FK to Project Task table
+ALTER TABLE ProjectTask
+ADD (
+	CONSTRAINT fk_ProjTask_to_Proj FOREIGN KEY (fk_ProjectID) REFERENCES Project(ProjectID)
+)
 
 -- Alter table to add new constraints required to implement the "TaskAssignedTo_ProjectTeamMember" relationship
 ALTER TABLE TaskAssignedTo
