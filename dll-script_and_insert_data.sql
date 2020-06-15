@@ -28,7 +28,7 @@ CREATE TABLE Employee(
 	Province	VARCHAR2(20) NOT NULL,
 	City	VARCHAR2(20) NOT NULL,
 	PostCode	VARCHAR2(8) NOT NULL,
-	SkillLevel	INTEGER NOT NULL,
+	SkillLevel	INTEGER NOT NULL, -- 0 not a dev, 1 low, 2 intermediate, 3 expert
 	StartDate	DATE NOT NULL,
 	EndDate	DATE,
 	-- Specify the PRIMARY KEY constraint for table "Employee".
@@ -230,13 +230,14 @@ ADD (
 
 -- Create a Database table to represent the "ProjectHours" entity.
 CREATE TABLE ProjectHours(
+	ProjectHoursID INTEGER NOT NULL,
 	HoursWorked INTEGER NOT NULL,
 	WorkedDate DATE NOT NULL,
 	fk_TaskID	INTEGER NOT NULL,
 	fk_ProjectID	INTEGER NOT NULL,
 	fk_EmployeeID	INTEGER NOT NULL,
 	-- Specify the PRIMARY KEY constraint for table "ProjectHours".
-	CONSTRAINT	pk_ProjectHours PRIMARY KEY (fk_TaskID, fk_ProjectID, fk_EmployeeID)
+	CONSTRAINT	pk_ProjectHours PRIMARY KEY (ProjectHoursID)
 );
 
 -- Alter table to add new constraints required to implement the "ProjectHours_ProjectTask" relationship
@@ -316,8 +317,8 @@ Insert into PROJECTCONTACT (STARTDATE,ENDDATE,FK_CONTACTID,FK_PROJECTID) values 
 Insert into PROJECTTASK (TASKID,FK_PROJECTID) values (1,1);
 Insert into PROJECTTASK (TASKID,FK_PROJECTID) values (2,2);
 Insert into PROJECTTASK (TASKID,FK_PROJECTID) values (3,3);
-Insert into PROJECTHOURS (HOURSWORKED,WorkedDate,FK_TASKID,FK_PROJECTID,FK_EMPLOYEEID) values (1, to_date('14-MAY-20','DD-MON-RR'), 1, 1, 1);
-Insert into PROJECTHOURS (HOURSWORKED,WorkedDate,FK_TASKID,FK_PROJECTID,FK_EMPLOYEEID) values (2, to_date('16-MAY-20','DD-MON-RR'), 2, 1, 2);
+Insert into PROJECTHOURS (ProjectHoursID,HOURSWORKED,WorkedDate,FK_TASKID,FK_PROJECTID,FK_EMPLOYEEID) values (1,1, to_date('14-MAY-20','DD-MON-RR'), 1, 1, 1);
+Insert into PROJECTHOURS (ProjectHoursID,HOURSWORKED,WorkedDate,FK_TASKID,FK_PROJECTID,FK_EMPLOYEEID) values (2,2, to_date('16-MAY-20','DD-MON-RR'), 2, 1, 2);
 Insert into PROJECTTEAMMEMBER (ENDDATE,STARTDATE,FK_PROJECTID,FK_EMPLOYEEID,FK_ROLEID) values (to_date('31-JUL-20','DD-MON-RR'),to_date('01-MAY-20','DD-MON-RR'),1,1,3);
 Insert into PROJECTTEAMMEMBER (ENDDATE,STARTDATE,FK_PROJECTID,FK_EMPLOYEEID,FK_ROLEID) values (to_date('31-JUL-20','DD-MON-RR'),to_date('01-MAY-20','DD-MON-RR'),1,2,3);
 Insert into SUBORDINATEEMPLOYEE (STARTDATE,ENDDATE,FK_MANAGERID,FK_EMPLOYEEID) values (to_date('01-MAY-20','DD-MON-RR'),to_date('31-JUL-20','DD-MON-RR'),1,1);
